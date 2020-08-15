@@ -86,23 +86,4 @@ class Html {
 		return $a;
 	}
 
-//	public static function a($href = '', $string = '', $class='', $id='', $datatoggle = '', $target = '') {
-//		if($href == '' && $string == '' && $class == ''){
-//			$href = self::home();
-//			$string = self::title();
-//			$class = 'navbar-brand';
-//		}
-//		else{
-//			$href = self::escap($href);
-//		}
-//		
-//		$a = '<a href="' . $href . '"';
-//		$a .= ($class != '' ? ' class="' . self::escap($class) . '"'  : '');
-//		$a .= ($id != '' ? ' id="' . self::escap($id) . '"'  : '');
-//		$a .= ($datatoggle != '' ? ' datatoggle="' . self::escap($datatoggle) . '"'  : '');
-//		$a .= ($target != '' ? ' target="' . self::escap($target) . '"'  : '');
-//		$a .= '>' . $string . '</a>' . PHP_EOL;
-//		
-//		return $a; 
-//	}
 }

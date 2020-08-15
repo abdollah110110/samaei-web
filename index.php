@@ -1,6 +1,6 @@
 <?php
 //ob_start();
-session_start();
+//session_start();
 require_once __DIR__ . '/init.php';
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ require_once __DIR__ . '/init.php';
 		<?= Html::link('css/styles.css'); ?>
 	</head>
 	<body>
-		<section class="container d-flex flex-column">
+		<section class="container">
 			<nav class="navbar navbar-expand-md navbar-light">
 				<?= Html::a() ?>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +59,7 @@ require_once __DIR__ . '/init.php';
 				<h1><?= Html::title() ?></h1>
 				<p><?= Html::description() ?></p>
 			</div>
+			<?php Tools::debug($config, false); ?>
 		</section>
 
 
@@ -68,6 +69,6 @@ require_once __DIR__ . '/init.php';
 	</body>
 </html> 
 <?php
-session_regenerate_id();
+//session_regenerate_id();
 //ob_end_flush();
 ?>
