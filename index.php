@@ -4,11 +4,12 @@
 require_once __DIR__ . '/init.php';
 ?>
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="<?= Html::lang() ?>">
 	<head>
 		<title><?php echo $config['title']; ?></title>
-		<meta charset="utf-8">
+		<meta charset="<?= Html::charset() ?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<?= Html::link('images/favicon.png', 'shortcut icon', 'image/png') ?>
 		<?= Html::link('css/vazir.css') ?>
 		<?= Html::link('font/fontawsome/css/all.min.css') ?>
 		<?= Html::link('css/bootstrap.min.css') ?>
@@ -59,6 +60,8 @@ require_once __DIR__ . '/init.php';
 				<h1><?= Html::title() ?></h1>
 				<p><?= Html::description() ?></p>
 			</div>
+			<?= Html::getDate('h:i:s') . PHP_EOL; ?><br />
+			<?= Html::gettime() . PHP_EOL; ?>
 			<?php Tools::debug($config, false); ?>
 		</section>
 

@@ -42,6 +42,47 @@ class Html {
 	}
 
 	/**
+	 * @global type $config
+	 * @return type get language
+	 */
+	public static function lang() {
+		global $config;
+		return self::escap($config['lang']);
+	}
+	
+	/**
+	 * 
+	 * @global type $config
+	 * @return type get charset
+	 */
+	public static function charset() {
+		global $config;
+		return self::escap($config['charset']);
+	}
+	
+	/**
+	 * 
+	 * @global type $config
+	 * @return type get date
+	 */
+	public static function getDate($str = 'Y/m/d - h:i:s a') {
+		global $config;
+		date_default_timezone_set($config['timezone']);
+		return date($str);
+	}
+
+	/**
+	 * 
+	 * @global type $config
+	 * @return type get timestamp
+	 */
+	public static function getTime() {
+		global $config;
+		date_default_timezone_set($config['timezone']);
+		return time();
+	}
+
+	/**
 	 * 
 	 * @return type link tag
 	 */
