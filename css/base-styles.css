@@ -1,0 +1,40 @@
+/* 
+    Created on : Aug 14, 2020, 8:36:00 PM
+    Author     : Abdollah samaei
+*/
+html, body{
+	font-size: 16px;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: #1B9CFC;
+	display: flex;
+}
+h1{
+	font-size: 2.3rem;
+}
+h2{
+	font-size: 1.9rem;
+}
+h3{
+	font-size: 1.6rem;
+}
+h4{
+	font-size: 1.25rem;
+}
+h5{
+	font-size: .9rem;
+}
+h6{
+	font-size: .75rem;
+}
+p{
+	font-size: 1rem;
+}
+strong, b{
+	font-weight: bold;
+}
+

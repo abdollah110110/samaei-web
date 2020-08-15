@@ -1,0 +1,10 @@
+.navbar{
+	padding: .5rem 0;
+}
+.navbar-light .navbar-nav .nav-link {
+    text-align: center;
+}
+.container{
+	background: #fff;
+}
+
