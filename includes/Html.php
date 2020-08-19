@@ -41,6 +41,14 @@ class Html {
 		return self::escap($config['homeUrl']);
 	}
 
+	public static function basePath($path = '') {
+		global $config;
+		if ($path == '') {
+			return self::escap($config['basePath']);
+		}
+		return self::escap($config['basePath'] . $path);
+	}
+
 	/**
 	 * @global type $config
 	 * @return type get language
@@ -49,7 +57,7 @@ class Html {
 		global $config;
 		return self::escap($config['lang']);
 	}
-	
+
 	/**
 	 * 
 	 * @global type $config
@@ -59,27 +67,22 @@ class Html {
 		global $config;
 		return self::escap($config['charset']);
 	}
-	
-	/**
-	 * 
-	 * @global type $config
-	 * @return type get date
-	 */
-	public static function getDate($str = 'Y/m/d - h:i:s a') {
-		global $config;
-		date_default_timezone_set($config['timezone']);
-		return date($str);
-	}
 
 	/**
 	 * 
 	 * @global type $config
-	 * @return type get timestamp
+	 * @param type $format a string contain date format
+	 * @param type $timestamp
+	 * @return type
 	 */
-	public static function getTime() {
+	public static function getDate($format = '', $timestamp = '') {
 		global $config;
 		date_default_timezone_set($config['timezone']);
-		return time();
+		$format = ($format == '' ? 'Y/m/d - h:i:s a' : $format);
+		if ($timestamp == '') {
+			return date($format);
+		}
+		return date($format, $timestamp);
 	}
 
 	/**
@@ -117,14 +120,21 @@ class Html {
 		}
 		$a = '<a ';
 		foreach ($array as $key => $value) {
-			if($key == 'href'){
+			if ($key == 'href') {
 				$a .= self::escap($key) . '="' . self::home() . self::escap($value) . '" ';
 				continue;
 			}
-			$a .= self::escap($key) . '="' . self::escap($value) . '" '; 
+			$a .= self::escap($key) . '="' . self::escap($value) . '" ';
 		}
 		$a .= '>' . self::escap($string) . '</a>' . PHP_EOL;
 		return $a;
+	}
+
+	public static function route($route) {
+		$routeParts = explode('/', $route);
+		$page = array_shift($routeParts);
+		$params = array_values($routeParts);
+		return [$page, $params];
 	}
 
 }

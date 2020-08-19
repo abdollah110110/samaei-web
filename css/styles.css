@@ -1,11 +1,39 @@
 .navbar{
 	padding: .5rem 0;
 }
+.navbar-brand{
+	font-weight: bold;
+}
+.navbar-brand:hover{
+	color: #1B9CFC !important;
+}
+.navbar-light .navbar-nav .active > .nav-link, 
+.navbar-light .navbar-nav .nav-link.active, 
+.navbar-light .navbar-nav .nav-link.show, 
+.navbar-light .navbar-nav .show > .nav-link {
+    color: #1B9CFC;
+}
 .navbar-light .navbar-nav .nav-link {
     text-align: center;
 }
 .container{
 	background: #fff;
+	min-height: 100vh;
+	padding-bottom: 0;
+}
+.content{
+	min-height: 85vh;
+}
+.jumbotron{
+	background: #ccc;
+	color: #333;
+}
+.footer{
+	display: flex;
+	justify-content: center;
+	padding: 1.2rem 0 0;
+	margin: 0;
+	border-top: .15rem solid #ccc;
 }
 
 

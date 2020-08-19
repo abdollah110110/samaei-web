@@ -33,8 +33,17 @@ h6{
 }
 p{
 	font-size: 1rem;
+	line-height: 1.85rem;
 }
 strong, b{
 	font-weight: bold;
+}
+.rtl{
+	direction: rtl;
+	text-align: right;
+}
+.ltr{
+	direction: ltr;
+	text-align: left;
 }
 

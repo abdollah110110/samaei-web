@@ -1,0 +1,7 @@
+Options +followsymlinks
+RewriteEngine on
+Rewritebase /samaei-web
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+Rewriterule ^(.*)$ index.php?r=$1 [L,NC,QSA]
