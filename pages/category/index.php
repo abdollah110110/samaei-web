@@ -1,6 +1,7 @@
 <?php if ( isset( $params[ 0 ] ) ): ?>
 	<?php
-	$category = (new Categories() ) -> findOne( ['id'=>$params[0],'active'=>1]);
+	$category = (new Categories() )->findOne( [ 'id' => $params[ 0 ], 'active' => 1 ] );
+//	Tools::debugPre( $category,true);
 	?>
 
 	<?php if ( $category ): ?>
@@ -9,10 +10,10 @@
 			<h1>نام موضوع: <?= $category[ 'name' ] ?></h1>
 		</div>
 		<?php
-		$posts = (new Posts() ) -> findFields( [ 'id', 'title', 'abstract', 'created_at' ] ) -> where( [
-								[ 'category_id', '=', $category[ 'id' ] ],
-								[ 'active', '=', 1 ],
-				] ) -> query();
+		$posts = ( new Posts() )->findFields( [ 'id', 'title', 'abstract', 'created_at' ], [
+				[ 'category_id', '=', $category[ 'id' ] ],
+				[ 'active', '=', 1 ],
+				] );
 		?>
 		<?php
 		require_once Html::basePath( 'includes\views\\show-posts.php' );

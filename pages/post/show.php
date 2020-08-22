@@ -1,6 +1,6 @@
 <?php if ( isset( $params[ 0 ] ) ): ?>
 	<?php
-	$post = (new Posts() ) -> findOne( [ 'id' => $params[ 0 ], 'active' => 1 ] );
+	$post = ( new Posts() )->findOne( [ 'id' => $params[ 0 ], 'active' => 1 ] );
 	?>
 
 	<?php if ( $post ): ?>
@@ -13,10 +13,10 @@
 				<?php
 				if ( isset( $post[ 'image' ] ) ) {
 					echo Html::img( Html::escap( $post[ 'image' ] ), Html::escap( $post[ 'title' ] ), [
-							'class' => 'img-thumbnail' ] );
+						'class' => 'img-thumbnail' ] );
 				} else {
 					echo Html::img( Html::home() . 'images\\' . 'abstract-img.jpg', Html::escap( $post[ 'title' ] ), [
-							'class' => 'img-thumbnail' ] );
+						'class' => 'img-thumbnail' ] );
 				}
 				?>
 			</div>
@@ -32,12 +32,12 @@
 					</small>
 					<small class="text-muted">
 						<i class="fas fa-eye"></i>
-						<?php (new Posts() ) -> counter( $post[ 'id' ] ); ?>
+						<?php (new Posts() )->counter( $post[ 'id' ], true ); ?>
 					</small>
 				</div>
 			</div>
 		</div>
-		<?php (new Comments())-> showAll( $post['id']); ?>
+		<?php (new Comments() )->showAll( $post[ 'id' ], null, ' class="my-2 p-2 border border-1" id="comments"' ); ?>
 	<?php else: ?>
 		<p class="alert alert-danger">پست یافت نشد.</p>
 	<?php endif; ?>

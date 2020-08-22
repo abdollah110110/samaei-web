@@ -17,19 +17,30 @@ class Database {
 		try {
 			return new PDO( 'mysql:dbname=' . $config[ 'db' ][ 'name' ] . ';host=' . $config[ 'db' ][ 'host' ] . ';', $config[ 'db' ][ 'user' ], $config[ 'db' ][ 'password' ], $attributes );
 		} catch ( PDOException $ex ) {
-			exit( 'Error database connect: ' . $ex -> getMessage() );
+			exit( 'Error database connect: ' . $ex->getMessage() );
 		}
 	}
 
-	public function query() {
-		$pdo = $this -> connect();
+	public function query($sql) {
+		$pdo = $this->connect();
 		try {
-			$st = $pdo -> prepare( $this -> sql );
-			$st -> execute();
-			$result = $st -> fetchAll( PDO::FETCH_ASSOC );
+			$st = $pdo->prepare( $sql );
+			$st->execute();
+			$result = $st->fetchAll( PDO::FETCH_ASSOC );
 			return $result;
 		} catch ( PDOException $ex ) {
-			exit( 'Error database query: ' . $ex -> getMessage() );
+			exit( 'Error database query: ' . $ex->getMessage() );
+		}
+	}
+
+	public function queryUpdate($sql) {
+		$pdo = $this->connect();
+		try {
+			$st = $pdo->prepare( $sql );
+			$st->execute();
+//			echo $st->rowCount() . " records UPDATED successfully";
+		} catch ( PDOException $ex ) {
+			exit( 'Error database query update: ' . $ex->getMessage() );
 		}
 	}
 
@@ -51,7 +62,7 @@ class Database {
 	 */
 	public function where( $params = [] ) {
 		$Where = ' WHERE ( ';
-		if ( is_array( $params ) ) {
+		if ( is_array( $params[0] ) ) {
 			$count = count( $params );
 			for ( $i = 0; $i < $count; $i ++ ) {
 				foreach ( $params[ $i ] as $value ) {
@@ -65,21 +76,27 @@ class Database {
 			}
 		}
 		$Where .= ' )';
-		$this -> sql .= $Where;
-		return $this;
+		return $Where;
 	}
 
+	/**
+	 * @return type Returns all records and table fields
+	 */
 	protected function selectAll() {
-		return 'SELECT * FROM ' . $this -> table;
+		return 'SELECT * FROM ' . $this->table;
 	}
 
 	protected function selectFields( $fields = [] ) {
-		return 'SELECT ' . $this -> checkfields( $fields ) . 'FROM ' . $this -> table;
+		return 'SELECT ' . $this->checkfields( $fields ) . 'FROM ' . $this->table;
 	}
 
+	/**
+	 * @param type $params Condition parameters for performing a query
+	 * @return string Returns a string that is a MySQL command
+	 */
 	protected function selectOneRecord( $params = [] ) {
 		$i = count( $params );
-		$sql = 'SELECT * FROM ' . $this -> table;
+		$sql = 'SELECT * FROM ' . $this->table;
 		$sql .= ' WHERE ( ';
 		foreach ( $params as $key => $value ) {
 			if ( $i > 1 ) {
@@ -99,24 +116,28 @@ class Database {
 	 * @return type a array result of query contain several records
 	 */
 	public function findAll() {
-		$this -> sql .= $this -> selectAll();
+		$this->sql .= $this->selectAll();
 		return $this;
 	}
 
 	/**
-	 *
-	 * @param type $params values for where
-	 * @param type $fields values for choise fields
-	 * @return type  a array result of query contain several records
+	 * @param type $fields The names of the table fields that need to be returned
+	 * @param type $whereParams Condition parameters for performing a query
+	 * @return type Returns several records as a query result
 	 */
-	public function findFields( $fields = [] ) {
-		$this -> sql = $this -> selectFields( $fields );
-		return $this;
+	public function findFields( $fields = [], $whereParams = [] ) {
+		$sql = $this->selectFields( $fields ) . $this->where( $whereParams );
+//		Tools::debugPre($sql,true);
+		return $this->query( $sql );
 	}
 
-	public function findOne( $params = [] ) {
-		$this -> sql = $this -> selectOneRecord( $params );
-		$record = $this -> query();
+	/**
+	 * @param type $whereParams Condition parameters for performing a query
+	 * @return type Returns a record that is the result of a query
+	 */
+	public function findOne( $whereParams = [] ) {
+		$sql = $this->selectOneRecord( $whereParams );
+		$record = $this->query($sql);
 		return $record[ 0 ];
 	}
 
