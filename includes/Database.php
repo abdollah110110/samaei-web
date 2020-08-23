@@ -21,7 +21,7 @@ class Database {
 		}
 	}
 
-	public function query($sql) {
+	public function query( $sql ) {
 		$pdo = $this->connect();
 		try {
 			$st = $pdo->prepare( $sql );
@@ -33,7 +33,19 @@ class Database {
 		}
 	}
 
-	public function queryUpdate($sql) {
+	public function queryOneRow( $sql ) {
+		$pdo = $this->connect();
+		try {
+			$st = $pdo->prepare( $sql );
+			$st->execute();
+			$result = $st->fetch( PDO::FETCH_ASSOC );
+			return $result;
+		} catch ( PDOException $ex ) {
+			exit( 'Error database query: ' . $ex->getMessage() );
+		}
+	}
+
+	public function queryUpdate( $sql ) {
 		$pdo = $this->connect();
 		try {
 			$st = $pdo->prepare( $sql );
@@ -62,7 +74,7 @@ class Database {
 	 */
 	public function where( $params = [] ) {
 		$Where = ' WHERE ( ';
-		if ( is_array( $params[0] ) ) {
+		if ( is_array( $params[ 0 ] ) ) {
 			$count = count( $params );
 			for ( $i = 0; $i < $count; $i ++ ) {
 				foreach ( $params[ $i ] as $value ) {
@@ -116,8 +128,7 @@ class Database {
 	 * @return type a array result of query contain several records
 	 */
 	public function findAll() {
-		$this->sql .= $this->selectAll();
-		return $this;
+		return $this->selectAll();
 	}
 
 	/**
@@ -137,8 +148,16 @@ class Database {
 	 */
 	public function findOne( $whereParams = [] ) {
 		$sql = $this->selectOneRecord( $whereParams );
-		$record = $this->query($sql);
+		$record = $this->query( $sql );
 		return $record[ 0 ];
+	}
+
+	/**
+	 * @param type $string A string to which a single quotation must be added
+	 * @return type Returns a string with a single quotation
+	 */
+	public static function singleQuote( $string ) {
+		return '\'' . $string . '\'';
 	}
 
 }

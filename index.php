@@ -1,14 +1,23 @@
 <?php require_once __DIR__ . '/init.php'; ?>
 <?php
 ob_start();
+Session::start();
+if ( isset( $_COOKIE[ 'data' ] ) ) {
+	$data = json_decode( $_COOKIE[ 'data' ], true );
+	Session::set( 'login', $data[ 'login' ] );
+	Session::set( 'id', $data[ 'id' ] );
+	Session::set( 'name', $data[ 'name' ] );
+	Session::set( 'admin', $data[ 'admin' ] );
+//	Tools::debugPre($_SESSION,true);
+}
 if ( isset( $_GET[ 'r' ] ) ) {
 	Page::loadPage( $_GET[ 'r' ] );
 } else {
 	Page::loadPage();
 }
-//$hash = password_hash('123456', PASSWORD_DEFAULT);
-//echo $hash;
 $content = ob_get_clean();
+Session::regenerateId();
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html lang="<?= Html::lang() ?>">
@@ -48,26 +57,24 @@ $content = ob_get_clean();
 								?>
 							</div>
 						</li>
-						<li class="flex-fill nav-item dropdown">
-							<?= Html::a( 'مدیریت', [ 'class' => 'nav-link dropdown-toggle', 'id' => 'navbarDropdown', 'data-toggle' => 'dropdown' ] ) ?>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div>
-						</li>
+						<?php if ( Session::get( 'login' ) && Session::get( 'admin' ) ): ?>
+							<li class="flex-fill nav-item">
+								<?= Html::a( 'داشبرد', [ 'href' => 'admin', 'class' => 'nav-link' ] ) ?>
+							</li>
+						<?php endif; ?>
 					</ul>
 					<form class="form-inline my-2 my-lg-0">
 						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
 					</form>
 					<div class="mr-2">
-						<?= Html::a( 'عضویت', [ 'href' => 'register.php' ] ) ?>
-						<span> / </span>
-						<?= Html::a( 'ورود', [ 'href' => 'login.php' ] ) ?>
-						<span> / </span>
-						<?= Html::a( 'خروج', [ 'href' => 'logout.php', 'class' => 'btn btn-sm btn-danger' ] ) ?>
+						<?php
+						if ( Session::get( 'login' ) === true ) {
+							echo Html::a( 'خروج', [ 'href' => 'logout', 'class' => 'btn btn-danger' ] );
+						} else {
+							echo Html::a( 'عضویت', [ 'href' => 'register' ] ) . '<span> / </span>' . Html::a( 'ورود', [ 'href' => 'login' ] );
+						}
+						?>
 					</div>
 				</div>
 			</nav>
@@ -77,7 +84,7 @@ $content = ob_get_clean();
 			</div>
 
 			<footer class="footer">
-				<p>&copy <?= Html::getDate( 'Y' ) ?></p>
+				<p>&copy <?= Html::getDate( '2020', 'Y' ) ?></p>
 			</footer>
 		</section>
 

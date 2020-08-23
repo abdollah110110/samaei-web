@@ -20,10 +20,28 @@ class Page {
 			case 'index':
 				require_once Html::basePath( 'pages\site\index.php' );
 				break;
-			case 'category':
+			case 'admin':
+				if ( Session::get( 'admin' ) ) {
+					require_once Html::basePath( 'pages\admin\index.php' );
+				} else {
+					Html::redirect( 'logout' );
+				}
+				break;
+			case 'login':
+				require_once Html::basePath( 'pages\users\login.php' );
+				break;
+			case 'logout':
+				Session::clear( 'login' );
+				Session::clear( 'id' );
+				Session::clear( 'name' );
+				Session::clear( 'admin' );
+				setcookie( 'data', '' );
+				Html::redirect( 'login' );
+				break;
+			case 'categories':
 				require_once Html::basePath( 'pages\category\index.php' );
 				break;
-			case 'post':
+			case 'posts':
 				require_once Html::basePath( 'pages\post\show.php' );
 				break;
 		}

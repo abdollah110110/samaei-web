@@ -1,7 +1,6 @@
 <?php if ( isset( $params[ 0 ] ) ): ?>
 	<?php
 	$category = (new Categories() )->findOne( [ 'id' => $params[ 0 ], 'active' => 1 ] );
-//	Tools::debugPre( $category,true);
 	?>
 
 	<?php if ( $category ): ?>

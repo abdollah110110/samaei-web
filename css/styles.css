@@ -27,6 +27,7 @@
 .jumbotron{
 	background: #ccc;
 	color: #333;
+	margin-bottom: 1rem;
 }
 .abstract-col a {
 	color: inherit;
@@ -60,4 +61,10 @@
 	background-color: #bdbdbd1f;
 	margin: .5rem;
 	padding: .5rem;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #1B9CFC;
+    border-color: #1B9CFC;
 }
